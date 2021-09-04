@@ -7,10 +7,22 @@
             <div class="card">
                 <div class="card-header">{{ __('Dashboard') }}</div>
 
+                <div class="informacao-pagina">
+                        <div class="contato-principal">
+                            <a href="/list"> &nbsp; &nbsp; See all your contacts
+                        </div>
+                    </div>
+
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-danger" role="alert">
                             {{ session('status') }}
+                        </div>
+                    @endif
+
+                    @if (session('success'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('success') }}
                         </div>
                     @endif
 

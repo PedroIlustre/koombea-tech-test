@@ -15,7 +15,7 @@ class UploadFileController extends Controller
 
         try {
             if(pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION) != 'csv')
-                return redirect('/home')->with('status', 'Extension not supported, only upload CSV files!');
+                return redirect('/')->with('status', 'Extension not supported, only upload CSV files!');
 
             
             $file_handle = fopen($file, 'r');
@@ -29,7 +29,7 @@ class UploadFileController extends Controller
             return view('validate_file_fields', ['file_lines'=> $file_lines, 'header' => $header, 'url_file' => $file]);
         } 
         catch (Exception $e){
-            return redirect('/home')->with('status', 'An error in processing your file:'.$e->getMessage());
+            return redirect('/')->with('status', 'An error in processing your file:'.$e->getMessage());
         }
     }
 

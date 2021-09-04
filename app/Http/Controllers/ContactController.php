@@ -30,5 +30,6 @@ class ContactController extends Controller
             $this->contract_files->upload_id = $upload_id;
             $this->contract_files->save();
         }
+        return redirect('/')->with('success', 'Your CSV file was saved');
     }
 }
