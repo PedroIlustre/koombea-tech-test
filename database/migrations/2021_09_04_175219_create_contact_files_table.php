@@ -18,7 +18,7 @@ class CreateContactFilesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('upload_id');
             $table->string('name');
-            $table->date('birth_date');
+            $table->string('birth_date');
             $table->string('phone');
             $table->string('addres');
             $table->string('credit_card');
