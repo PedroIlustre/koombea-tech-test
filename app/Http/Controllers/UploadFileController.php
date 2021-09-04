@@ -16,11 +16,18 @@ class UploadFileController extends Controller
                 return redirect('/home')->with('status', 'Extension not supported, only upload CSV files!');
 
             
-                dd('d');
+            $file_handle = fopen($file, 'r');
+            while (!feof($file_handle)) {
+                $file_lines[] = fgetcsv($file_handle, 0, ','  );
+            }
+
+            $header = $file_lines[0];
+            array_shift($file_lines);
+
+            return view('validate_file_fields', ['file_lines'=> $file_lines, 'header' => $header]);
         } 
         catch (Exception $e){
-
+            return redirect('/home')->with('status', 'An error in processing your file:'.$e->getMessage());
         }
-        dd($_POST['file']);
     }
 }

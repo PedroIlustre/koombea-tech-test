@@ -15,5 +15,6 @@ use Illuminate\Support\Facades\Route;
 
 
 Auth::routes();
+Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/upload_file', 'UploadFileController@uploadFile')->name('upload_file');
