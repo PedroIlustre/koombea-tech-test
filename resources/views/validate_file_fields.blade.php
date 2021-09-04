@@ -10,6 +10,7 @@
         @foreach($header as $k => $item)
               The value of the field called <b> {{$item}} </b>  is <b> {{$lines[$k]}} </b>
               <input type="hidden" name="value_field[{{$num_line}}][{{$k}}]" value="{{$lines[$k]}}">
+              <input type="hidden" name="url_file" value="{{$url_file}}">
               do you want to save as: 
               <select name="table_column[{{$num_line}}][{{$k}}]" id="table_column"> 
                 <option value="name"> Name </option>

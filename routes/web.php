@@ -18,4 +18,5 @@ Auth::routes();
 // Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/upload_file', 'UploadFileController@uploadFile')->name('upload_file');
-Route::post('/save_contact', 'ContactController@save')->name('save_contact');
+Route::post('/save_contact', 'UploadFileController@save')->name('save_contact');
+Route::post('/save_contact_data', 'ContactController@save')->name('save_contact_data');
