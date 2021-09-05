@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Upload extends Model
 {
 
+    public $table = "uploads";
     /**
      * The attributes that are mass assignable.
      *

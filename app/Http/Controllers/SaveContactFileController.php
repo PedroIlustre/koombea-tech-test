@@ -14,7 +14,7 @@ class SaveContactFileController extends Controller
         $file = $request->all()['url_file'];
         $upload = new Upload();
         $upload->url = $file;
-        $upload->save();
+        $upload->list();
 
         $contract = new SaveContactController();
         return $contract->save($request, $upload->id);
