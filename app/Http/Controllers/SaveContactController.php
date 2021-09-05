@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Models\ContactFiles;
 use App\Http\Controllers\Auth;
 
-class ContactController extends Controller
+class SaveContactController extends Controller
 {
 
     private $contract_files;

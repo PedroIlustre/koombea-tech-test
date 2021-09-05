@@ -7,7 +7,7 @@ use Illuminate\Http\Response;
 use App\Http\Models\Upload;
 use App\Http\Controllers\ContactController;
 
-class UploadFileController extends Controller
+class UploadContactFileController extends Controller
 {
     public function uploadFile (Request $request) 
     {
@@ -31,17 +31,5 @@ class UploadFileController extends Controller
         catch (Exception $e){
             return redirect('/')->with('status', 'An error in processing your file:'.$e->getMessage());
         }
-    }
-
-    public function save (Request $request) 
-    {
-        $file = $request->all()['url_file'];
-        $upload = new Upload();
-        $upload->url = $file;
-        $upload->save();
-
-        $contract = new ContactController();
-        return $contract->save($request, $upload->id);
-
     }
 }
