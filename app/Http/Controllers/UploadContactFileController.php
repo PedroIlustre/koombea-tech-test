@@ -9,7 +9,7 @@ use App\Http\Controllers\ContactController;
 
 class UploadContactFileController extends Controller
 {
-    public function uploadFile ($request) 
+    public function uploadFile (Request $request) 
     {
         $file = $request->file('file_uploaded');
 
