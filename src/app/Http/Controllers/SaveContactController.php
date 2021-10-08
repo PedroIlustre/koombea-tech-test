@@ -19,17 +19,33 @@ class SaveContactController extends Controller
 
     public function save (Request $request, $upload_id) 
     {
-
         $fields = array_merge($request->all(), ['upload_id' => $upload_id]);
 
-        foreach($fields['value_field'] as $k => $contact){
-            foreach($fields['table_column'][$k] as $i => $table_column){
-                $this->contract_files->{$table_column} = $contact[$i];
+        try {
+            if (is_array($fields)){
+                foreach($fields['value_field'] as $k => $contact){
+                    foreach($fields['table_column'][$k] as $i => $table_column){
+                        $this->contract_files->{$table_column} = $contact[$i];
+                    }
+                    $this->contract_files->user_id = \Auth::user()->id;
+                    $this->contract_files->upload_id = $upload_id;
+                    $this->contract_files->save();
+                }
             }
-            $this->contract_files->user_id = \Auth::user()->id;
-            $this->contract_files->upload_id = $upload_id;
-            $this->contract_files->save();
+
+            $msg = 'Your CSV file was saved';
+            $status_request = 'success';
+
+        } catch (Exception $e) {
+            $msg = $e->getMessage();
+            $status_request = 'error';
         }
-        return redirect('/')->with('success', 'Your CSV file was saved');
+
+        return redirect('/')->with($status_request, $msg);
+    }
+
+    public static function validateFields (array $fieldsOfContact) 
+    {
+        # todo  - create an dynamic method that allows the class to validate every requeired fields at the DB
     }
 }

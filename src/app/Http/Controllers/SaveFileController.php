@@ -7,7 +7,7 @@ use Illuminate\Http\Response;
 use App\Http\Models\Upload;
 use App\Http\Controllers\SaveContactController;
 
-class SaveContactFileController extends Controller
+class SaveFileController extends Controller
 {
     public function save (Request $request) 
     {

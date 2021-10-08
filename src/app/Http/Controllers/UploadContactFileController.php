@@ -14,8 +14,11 @@ class UploadContactFileController extends Controller
         $file = $request->file('file_uploaded');
 
         try {
-            if(pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION) != 'csv')
-                return redirect('/')->with('status', 'Extension not supported, only upload CSV files!');
+            if (!isset($file))
+                return redirect('/')->with('error', 'Please select a file');
+
+            if (pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION) != 'csv')
+                return redirect('/')->with('error', 'Extension not supported, only upload CSV files!');
 
             
             $file_handle = fopen($file, 'r');
@@ -29,7 +32,7 @@ class UploadContactFileController extends Controller
             return view('validate_file_fields', ['file_lines'=> $file_lines, 'header' => $header, 'url_file' => $file]);
         } 
         catch (Exception $e){
-            return redirect('/')->with('status', 'An error in processing your file:'.$e->getMessage());
+            return redirect('/')->with('error', 'An error in processing your file:'.$e->getMessage());
         }
     }
 }
