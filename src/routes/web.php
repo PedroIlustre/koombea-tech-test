@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
+Route::post('/save_file', 'SaveFileController@save')->name('save_file');
+Route::get('/show_upload/{id}', 'UploadedFileController@show')->name('show_upload');
 Route::post('/upload_file', 'UploadContactFileController@uploadFile')->name('upload_file');
-Route::post('/save_contact', 'SaveFileController@save')->name('save_contact');
 Route::get('/list', 'ListContactController@list')->name('list_contact');

@@ -1,5 +1,5 @@
 {{ $slot }}
-<form id="send_file" action='{{ route("upload_file") }}' enctype="multipart/form-data" method="post">
+<form id="send_file" action='{{ route("save_file") }}' enctype="multipart/form-data" method="post">
     {{ @csrf_field() }} 
 {{ method_field('POST') }}
     <label class="btn"> Select a CSV file

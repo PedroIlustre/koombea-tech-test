@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreContactRequest;
 use App\Http\Models\ContactFiles;
 use App\Http\Controllers\Auth;
 
@@ -17,7 +18,7 @@ class SaveContactController extends Controller
         $this->contract_files = new ContactFiles();
     }
 
-    public function save (Request $request, $upload_id) 
+    public function save (StoreContactRequest $request, $upload_id) 
     {
         $fields = array_merge($request->all(), ['upload_id' => $upload_id]);
 
@@ -44,8 +45,4 @@ class SaveContactController extends Controller
         return redirect('/')->with($status_request, $msg);
     }
 
-    public static function validateFields (array $fieldsOfContact) 
-    {
-        # todo  - create an dynamic method that allows the class to validate every requeired fields at the DB
-    }
 }
