@@ -24,7 +24,6 @@ class StoreContactRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id'      => 'required',
             'upload_id'    => 'required',
             'name'         => 'required',
             'phone'        => 'required',

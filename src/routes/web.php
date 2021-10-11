@@ -18,5 +18,5 @@ Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
 Route::post('/save_file', 'SaveFileController@save')->name('save_file');
 Route::get('/show_upload/{id}', 'UploadedFileController@show')->name('show_upload');
-Route::post('/save_contact', 'UploadContactFileController@uploadFile')->name('save_contact');
+Route::post('/save_contact', 'SaveContactController@save')->name('save_contact');
 Route::get('/list', 'ListContactController@list')->name('list_contact');

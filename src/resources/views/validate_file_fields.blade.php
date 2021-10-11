@@ -17,6 +17,7 @@
         <form id="save-contact" method="post" action='{{ route("save_contact") }}' enctype="multipart/form-data">
             {{ @csrf_field() }} 
             {{ method_field('POST') }}
+            <input type="hidden" name="upload_id" value="{{$upload_id}}">
             @foreach($header as $k => $item)
                 The value of the field called <b> {{$item}} </b>  is <b> {{$lines[$item]}} </b>
                 <input type="hidden" name="value_field[{{$num_line}}][{{$item}}]" value="{{$lines[$item]}}">

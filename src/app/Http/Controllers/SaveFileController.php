@@ -29,7 +29,7 @@ class SaveFileController extends Controller
         }
 
         $file->storeAs('csv', $file_name);
-        return redirect()->route('show_upload',['id'=>$file_name]);
+        return redirect()->route('show_upload',['id'=>$upload->id]);
 
     }
 }

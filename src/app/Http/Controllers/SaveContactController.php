@@ -18,9 +18,9 @@ class SaveContactController extends Controller
         $this->contract_files = new ContactFiles();
     }
 
-    public function save (StoreContactRequest $request, $upload_id) 
+    public function save (Request $request) 
     {
-        $fields = array_merge($request->all(), ['upload_id' => $upload_id]);
+        $fields = array_merge($request->all());
 
         try {
             if (is_array($fields)){
@@ -43,6 +43,11 @@ class SaveContactController extends Controller
         }
 
         return redirect('/')->with($status_request, $msg);
+    }
+
+    private function store () 
+    {
+
     }
 
 }

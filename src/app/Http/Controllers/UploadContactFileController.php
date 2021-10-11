@@ -24,7 +24,6 @@ class UploadContactFileController extends Controller
             return view('validate_file_fields', ['file_lines'=> $file_lines, 'header' => $header, 'url_file' => $file]);
         } 
         catch (Exception $e){
-            dd($e);
             return redirect('/')->with('error', 'An error in processing your file:'.$e->getMessage());
         }
     }
