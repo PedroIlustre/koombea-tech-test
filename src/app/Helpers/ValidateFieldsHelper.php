@@ -6,7 +6,7 @@ class ValidateFieldsHelper
 {
     public static function validate (array $fields)
     {
-        foreach ($header as $item){
+        foreach ($header as $item) {
             switch($item){
                 case 'name':
                 case 'birth_date':

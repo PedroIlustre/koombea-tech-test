@@ -25,10 +25,10 @@ class SaveContactController extends Controller
         $this->upload_id = $fields['upload_id'];
 
         try {
-            if (is_array($fields)){
-                foreach($fields['value_field'] as $k => $contact){
-                    foreach($fields['table_column'][$k] as $table_column => $new_value_column){
-                        if(is_null($new_value_column)){
+            if (is_array($fields)) {
+                foreach ($fields['value_field'] as $k => $contact) {
+                    foreach ($fields['table_column'][$k] as $table_column => $new_value_column){
+                        if (is_null($new_value_column)) {
                             $errorTableColumns[] = $table_column;
                             continue;
                         }

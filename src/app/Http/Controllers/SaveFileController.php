@@ -24,7 +24,8 @@ class SaveFileController extends Controller
             $upload = new Upload();
             $upload->url = $file_name;
             $upload->save();
-        } catch (Exception $e){
+
+        } catch (Exception $e) {
             return redirect('/')->with('error', 'Cannont persist file in the database');
         }
 
