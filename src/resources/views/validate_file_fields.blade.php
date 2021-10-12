@@ -4,11 +4,11 @@
 <div>  Please confirm your file informations <br> <br>
     @foreach($file_lines as $num_line => $lines)
         <center> At the line number {{$num_line}}  <br>
-        @if ($errors->any())
+        @if ($error_message)
             <div class="alert alert-danger">
                 <ul>
-                    @foreach ($errors->all() as $error)
-                        <li> {{ $error }} </li>
+                    @foreach ($error_message as $error)
+                        <li> The field <b>{{ $error }} </b> has no value</li>
                     @endforeach
                 </ul>
             </div>
