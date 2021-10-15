@@ -8,7 +8,7 @@
             <div class="alert alert-danger">
                 <ul>
                     @foreach ($error_message as $error)
-                        <li> The field <b>{{ $error }} </b> has no value</li>
+                        <li> {{ $error }} </li>
                     @endforeach
                 </ul>
             </div>

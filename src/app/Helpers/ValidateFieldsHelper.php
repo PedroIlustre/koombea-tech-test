@@ -2,25 +2,53 @@
 
 namespace App\Helpers;
 
+use App\Helpers\ValidateFranchiseCreditCardHelper;
+use App\Helpers\ValidateCreditCardHelper;
+use Illuminate\Support\Facades\Validator;
+
 class ValidateFieldsHelper
 {
-    public static function validate (array $fields)
+    public static function validateFields(array $fields) : array
     {
-        foreach ($header as $item) {
-            switch($item){
-                case 'name':
-                case 'birth_date':
-                case 'phone':
-                case 'addres':
-                case 'credit_card':
-                case 'franchise':
-                case 'email':
-                    break;
-                default:
-                    return $item;
-                
+        $general_fields = Validator::make($fields, [
+            'name' => 'required|max:255|regex:/^[a-zA-ZÑñ\s]+$/',
+            'birth_date' => 'required|date_format:Y/m/d',
+            'email' => 'required|email|unique:users'
+        ]);
+        $valid_franchise = ValidateFranchiseCreditCardHelper::validFranchise($fields['credit_card']);
+
+        $valid_credit_card = ValidateCreditCardHelper::validCreditCard($fields['credit_card']);
+
+        return self::validationMsg($general_fields, $valid_franchise, $valid_credit_card);
+    }
+
+    private static function validationMsg($general_fields, $valid_franchise, $valid_credit_card)
+    {
+        $status = 'success';
+        $msg = '';
+        if (
+            $general_fields->fails() || 
+            !$valid_franchise        ||
+            !$valid_credit_card
+            ) {
+
+            $msg = 'An error saving the following field(s): ';
+            $status = 'error';
+
+            if ($general_fields->fails()){
+                foreach ($general_fields->errors()->messages() as $field => $value){
+                    $msg .= $field. ': '.implode(', ', $value);
+                }
             }
+            
+            if (!$valid_franchise)
+            $msg .= ' Credit card error: Invalid Franchise.';
+            
+            if (!$valid_credit_card)
+            $msg .= ' Credit card error: Invalidt Credit Card.';
         }
-        return true;
+
+        return array('status' => $status, 'msg' => $msg);
+
     }
 }
