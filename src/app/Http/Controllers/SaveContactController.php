@@ -9,6 +9,7 @@ use App\Exceptions\FieldsException;
 use App\Helpers\ValidateCreditCardHelper;
 use App\Helpers\ValidateFieldsHelper;
 use App\Helpers\ValidateFranchiseCreditCardHelper;
+use App\Helpers\GetFranchiseHelper;
 
 class SaveContactController extends Controller
 {
@@ -27,6 +28,7 @@ class SaveContactController extends Controller
         $fields = array_merge($request->all());
         $this->upload_id = $fields['upload_id'];
         $error_table_columns = [];
+        $credit_card = '';
 
         try {
             if (is_array($fields)) {
@@ -37,18 +39,24 @@ class SaveContactController extends Controller
                             continue;
                         }
                         $this->contact_files->{$table_column} = $contact[$new_value_column];
-                    }
 
+                        if($table_column == 'credit_card') {
+                            $credit_card = $contact[$new_value_column];
+                        }
+                    }
+                    
+                    // validations
                     if (count($error_table_columns) > 0) {
                         throw new FieldsException ('', 0, null, $error_table_columns);
                     }
-                   
+                    
                     $validate_fields = ValidateFieldsHelper::validateFields($this->contact_files->getAttributes());
-
+                    
                     if ($validate_fields['status'] == 'error') {
                         throw new FieldsException ('', 0, null, $validate_fields);
                     }
-
+                    
+                    $this->contact_files->franchise = GetFranchiseHelper::franchise($credit_card);
                     $this->contact_files->user_id = \Auth::user()->id;
                     $this->contact_files->upload_id = $this->upload_id;
                     $this->contact_files->save();

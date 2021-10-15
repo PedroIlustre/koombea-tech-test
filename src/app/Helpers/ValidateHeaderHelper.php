@@ -13,7 +13,6 @@ class ValidateHeaderHelper
                 case 'phone':
                 case 'addres':
                 case 'credit_card':
-                case 'franchise':
                 case 'email':
                     break;
                 default:
