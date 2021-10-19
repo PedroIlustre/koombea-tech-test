@@ -2,11 +2,10 @@
 
 namespace App\Helpers;
 
-use App\Helpers\ValidateFranchiseCreditCardHelper;
-use App\Helpers\ValidateCreditCardHelper;
+use App\Helpers\CreditCardHelper;
 use Illuminate\Support\Facades\Validator;
 
-class ValidateFieldsHelper
+class ContactInfoHelper
 {
     public static function validateFields(array $fields) : array
     {
@@ -15,9 +14,9 @@ class ValidateFieldsHelper
             'birth_date' => 'required|date_format:Y/m/d',
             'email' => 'required|email|unique:users'
         ]);
-        $valid_franchise = ValidateFranchiseCreditCardHelper::validFranchise($fields['credit_card']);
+        $valid_franchise = CreditCardHelper::validFranchise($fields['credit_card']);
 
-        $valid_credit_card = ValidateCreditCardHelper::validCreditCard($fields['credit_card']);
+        $valid_credit_card = CreditCardHelper::validCreditCard($fields['credit_card']);
 
         return self::validationMsg($general_fields, $valid_franchise, $valid_credit_card);
     }

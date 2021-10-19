@@ -6,10 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Models\ContactFiles;
 use App\Http\Controllers\Auth;
 use App\Exceptions\FieldsException;
-use App\Helpers\ValidateCreditCardHelper;
-use App\Helpers\ValidateFieldsHelper;
-use App\Helpers\ValidateFranchiseCreditCardHelper;
-use App\Helpers\GetFranchiseHelper;
+use App\Helpers\CreditCardHelper;
+use App\Helpers\ContactInfoHelper;
 
 class SaveContactController extends Controller
 {
@@ -50,13 +48,13 @@ class SaveContactController extends Controller
                         throw new FieldsException ('', 0, null, $error_table_columns);
                     }
                     
-                    $validate_fields = ValidateFieldsHelper::validateFields($this->contact_files->getAttributes());
+                    $validate_fields = ContactInfoHelper::validateFields($this->contact_files->getAttributes());
                     
                     if ($validate_fields['status'] == 'error') {
                         throw new FieldsException ('', 0, null, $validate_fields);
                     }
                     
-                    $this->contact_files->franchise = GetFranchiseHelper::franchise($credit_card);
+                    $this->contact_files->franchise = CreditCardHelper::franchise($credit_card);
                     $this->contact_files->user_id = \Auth::user()->id;
                     $this->contact_files->upload_id = $this->upload_id;
                     $this->contact_files->save();
