@@ -19,6 +19,6 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::post('/save_file', 'SaveFileController@save')->name('save_file');
 Route::get('/show_upload/{id}', 'UploadedFileController@show')->name('show_upload');
 Route::post('/save_contact', 'SaveContactController@save')->name('save_contact');
-Route::get('/list', 'ListContactController@list')->name('list_contact');
-Route::get('/listFiles', 'ListFilesontroller@list')->name('list_files');
+Route::get('/list_contact/{id}', 'ListContactController@list')->name('list_contact');
+Route::get('/list_files/{id}', 'UploadedFileController@list')->name('list_files');
 Route::get('phpmyinfo', function () {phpinfo(); })->name('phpmyinfo');

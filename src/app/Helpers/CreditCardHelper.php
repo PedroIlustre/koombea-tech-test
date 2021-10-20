@@ -79,6 +79,6 @@ class CreditCardHelper
 
     public static function validFranchise ($number) : bool
     {
-        return boolval(GetFranchiseHelper::franchise($number));
+        return boolval(self::franchise($number));
     }
 }

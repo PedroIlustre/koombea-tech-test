@@ -24,4 +24,19 @@ class UploadedFileController extends Controller
         }
 
     }
+
+    public function list ($user_id)
+    {
+        try {
+            $files_name = Upload::where('user_id','=',$user_id)
+                                ->where('processed','=','false')
+                                ->get();
+
+            return view('list_files', ['files' => $files_name]);
+        
+        }
+        catch (Exception $e) {
+            return redirect('/')->with('error', 'An error in processing your file:'.$e->getMessage());
+        }
+    }
 }

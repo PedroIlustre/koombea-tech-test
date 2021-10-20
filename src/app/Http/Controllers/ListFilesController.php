@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class ListFilesController extends Controller
 {
-    public function list () 
+    public function list ($user_id) 
     {
         
     }

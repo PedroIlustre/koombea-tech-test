@@ -17,6 +17,7 @@ class CreateUploadsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->string('url');
+            $table->boolean('processed');
             $table->timestamps();
         });
 

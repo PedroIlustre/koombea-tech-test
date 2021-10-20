@@ -15,7 +15,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach($contact_files as $contact)
+        @foreach($contacts as $contact)
         <tr>
             <td> {{$contact->name}} </td>
             <td> {{$contact->birth_date}} </td>

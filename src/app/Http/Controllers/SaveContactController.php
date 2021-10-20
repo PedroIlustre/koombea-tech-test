@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Models\ContactFiles;
+use App\Http\Models\Contact;
 use App\Http\Controllers\Auth;
 use App\Exceptions\FieldsException;
 use App\Helpers\CreditCardHelper;
@@ -13,12 +13,12 @@ class SaveContactController extends Controller
 {
 
     private $contact_files;
-    private $file_id;
+    private $upload_id;
 
     public function __construct()
     {
         $this->middleware('auth');
-        $this->contact_files = new ContactFiles();
+        $this->contact_files = new Contact();
     }
 
     public function save (Request $request) 
@@ -48,16 +48,26 @@ class SaveContactController extends Controller
                         throw new FieldsException ('', 0, null, $error_table_columns);
                     }
                     
-                    $validate_fields = ContactInfoHelper::validateFields($this->contact_files->getAttributes());
+                    // $validate_fields = ContactInfoHelper::validateFields($this->contact_files->getAttributes());
                     
-                    if ($validate_fields['status'] == 'error') {
-                        throw new FieldsException ('', 0, null, $validate_fields);
-                    }
+                    // if ($validate_fields['status'] == 'error') {
+                    //     throw new FieldsException ('', 0, null, $validate_fields);
+                    // }
                     
                     $this->contact_files->franchise = CreditCardHelper::franchise($credit_card);
                     $this->contact_files->user_id = \Auth::user()->id;
                     $this->contact_files->upload_id = $this->upload_id;
                     $this->contact_files->save();
+                    
+                    try {
+
+                        $file = new SaveFileController();
+                        $file->updateFileStatus($this->upload_id);
+
+                    }  catch (Exception $e) {
+                        throw new FieldsException('', 0, null, $e->getMessage());
+                    }
+
                 }
             }
         } catch (FieldsException $e) {

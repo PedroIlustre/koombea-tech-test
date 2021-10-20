@@ -12,6 +12,14 @@ use Exception;
 
 class SaveFileController extends Controller
 {
+
+    protected $upload;
+
+    public function __construct ()
+    {
+        $this->upload = new Upload;
+    }
+
     public function save (Request $request) 
     {
         $file = $request->file('file_uploaded');
@@ -32,15 +40,28 @@ class SaveFileController extends Controller
             return redirect('/')->with('error', $validation['msg']);
 
         try {
-            $upload = new Upload();
-            $upload->url = $file_name;
-            $upload->user_id = \Auth::user()->id;
-            $upload->save();
+
+            $this->store($file_name, false);
 
         } catch (Exception $e) {
             return redirect('/')->with('error', 'Fail to persist file in the database: '.$e->getMessage());
         }
 
-        return redirect()->route('show_upload', ['id'=>$upload->id]);
+        return redirect()->route('show_upload', ['id'=>$this->upload->id]);
+    }
+
+    public function store (string $file_name, bool $processed)
+    {
+        $this->upload->url = $file_name;
+        $this->upload->processed = $processed;
+        $this->upload->user_id = \Auth::user()->id;
+        $this->upload->save();
+    }
+
+    public function updateFileStatus (int $upload_id)
+    {
+        $upload = $this->upload->find($upload_id);
+        $upload->processed = true;
+        $upload->save();
     }
 }
