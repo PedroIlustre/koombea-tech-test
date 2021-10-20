@@ -7,7 +7,7 @@ use League\Csv\Reader;
 class CsvHelper
 {
 
-    public static function validateUpload (object $file, string $file_name)
+    public static function validateFile (object $file, string $file_name)
     {
         $log_validate['error'] = false;
         $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
@@ -37,6 +37,7 @@ class CsvHelper
         $file->storeAs('csv', $file_name);
         $file_read = self::getFileFromStorage($file_name);
         $file_read->setHeaderOffset(0);
+        
         return self::validateHeaderString($file_read->getHeader());
     }
 

@@ -21,7 +21,7 @@ class SaveFileController extends Controller
 
         $file_name = $file->getClientOriginalName();
 
-        $validation = CsvHelper::validateUpload($file, $file_name);
+        $validation = CsvHelper::validateFile($file, $file_name);
 
         if ($validation['error'] === true)
             return redirect('/')->with('error', $validation['msg']);
