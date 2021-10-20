@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Models\Upload;
 use League\Csv\Writer;
 use App\Helpers\CsvHelper;
+use App\Jobs\StoreCsv;
 use App\Http\Controllers\SaveContactController;
 use Exception;
 
@@ -29,19 +30,19 @@ class SaveFileController extends Controller
 
         $file_name = $file->getClientOriginalName();
 
-        $validation = CsvHelper::validateFile($file, $file_name);
-
         if ($file->getSize() > 41463) {
-            //put to a queue
+            StoreCsv::dispatch($file_name, \Auth::user()->id);
             return redirect('/')->with('success', 'Your file was received and will be processed soon');;
         }
+
+        $validation = CsvHelper::validateFile($file, $file_name);
 
         if ($validation['error'] === true)
             return redirect('/')->with('error', $validation['msg']);
 
         try {
 
-            $this->store($file_name, false);
+            $this->store($file_name);
 
         } catch (Exception $e) {
             return redirect('/')->with('error', 'Fail to persist file in the database: '.$e->getMessage());
@@ -50,15 +51,15 @@ class SaveFileController extends Controller
         return redirect()->route('show_upload', ['id'=>$this->upload->id]);
     }
 
-    public function store (string $file_name, bool $processed)
+    public function store (string $file_name, $user_id = null)
     {
         $this->upload->url = $file_name;
-        $this->upload->processed = $processed;
-        $this->upload->user_id = \Auth::user()->id;
+        $this->upload->processed = false;
+        $this->upload->user_id = $user_id ?? \Auth::user()->id;
         $this->upload->save();
     }
 
-    public function updateFileStatus (int $upload_id)
+    public function processFile (int $upload_id)
     {
         $upload = $this->upload->find($upload_id);
         $upload->processed = true;

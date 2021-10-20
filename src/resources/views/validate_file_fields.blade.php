@@ -30,7 +30,6 @@
                     <option value="phone">Phone </option>
                     <option value="addres"> Addres </option>
                     <option value="credit_card"> Credir Card</option>
-                    <option value="franchise">FR  </option>
                     <option value="email"> E-mail</option>
                 </select> 
                 <br>
