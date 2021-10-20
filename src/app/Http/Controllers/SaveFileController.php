@@ -23,6 +23,11 @@ class SaveFileController extends Controller
 
         $validation = CsvHelper::validateFile($file, $file_name);
 
+        if ($file->getSize() > 41463) {
+            //put to a queue
+            return redirect('/')->with('success', 'Your file was received and will be processed soon');;
+        }
+
         if ($validation['error'] === true)
             return redirect('/')->with('error', $validation['msg']);
 

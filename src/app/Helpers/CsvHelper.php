@@ -17,11 +17,6 @@ class CsvHelper
             $log_validate['error'] = true;
         }
 
-        // if ($file->getSize() > 41463) {
-        //     //put to a queue
-        //     return redirect('/')->with('success', 'Your file was received and will be processed soon');;
-        // }
-
         $validate_header = CsvHelper::validateHeader($file, $file_name);
 
         if ($validate_header !== true && $log_validate['error'] === false) {
@@ -37,7 +32,7 @@ class CsvHelper
         $file->storeAs('csv', $file_name);
         $file_read = self::getFileFromStorage($file_name);
         $file_read->setHeaderOffset(0);
-        
+
         return self::validateHeaderString($file_read->getHeader());
     }
 
