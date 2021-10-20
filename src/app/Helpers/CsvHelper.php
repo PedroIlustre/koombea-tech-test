@@ -6,6 +6,32 @@ use League\Csv\Reader;
 
 class CsvHelper
 {
+
+    public static function validateUpload (object $file, string $file_name)
+    {
+        $log_validate['error'] = false;
+        $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
+
+        if ($file_extension != 'csv') {
+            $log_validate['msg'] = ' Extension not supported (.'.$file_extension.'), only CSV files! ';
+            $log_validate['error'] = true;
+        }
+
+        // if ($file->getSize() > 41463) {
+        //     //put to a queue
+        //     return redirect('/')->with('success', 'Your file was received and will be processed soon');;
+        // }
+
+        $validate_header = CsvHelper::validateHeader($file, $file_name);
+
+        if ($validate_header !== true && $log_validate['error'] === false) {
+            $log_validate['msg'] = ' The '.$validate_header.' is not a valid Header ';
+            $log_validate['error'] = true;
+        }
+
+        return $log_validate;
+    }
+
     public static function validateHeader (object $file, string $file_name)
     {
         $file->storeAs('csv', $file_name);

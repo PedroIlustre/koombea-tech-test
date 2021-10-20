@@ -21,19 +21,10 @@ class SaveFileController extends Controller
 
         $file_name = $file->getClientOriginalName();
 
-        if (pathinfo($file_name, PATHINFO_EXTENSION) != 'csv')
-            return redirect('/')->with('error', 'Extension not supported, only upload CSV files!');
+        $validation = CsvHelper::validateUpload($file, $file_name);
 
-        if ($file->getSize() > 41463) {
-            //put to a queue
-            return redirect('/')->with('success', 'Your file was received and will be processed soon');;
-        }
-
-        $validate_header = CsvHelper::validateHeader($file, $file_name);
-
-        if ($validate_header !== true) {
-            return redirect('/')->with('error', 'The '.$validate_header.' is not a valid Header');
-        }
+        if ($validation['error'] === true)
+            return redirect('/')->with('error', $validation['msg']);
 
         try {
             $upload = new Upload();
