@@ -21,7 +21,7 @@ class StoreLargeCsv implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($file_name, $user_id)
+    public function __construct(string $file_name, int $user_id)
     {
         $this->file_name = $file_name;
         $this->user_id   = $user_id;
