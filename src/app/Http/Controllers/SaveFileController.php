@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Models\Upload;
 use League\Csv\Writer;
 use App\Helpers\CsvHelper;
-use App\Jobs\StoreCsv;
+use App\Jobs\StoreLargeCsv;
 use App\Http\Controllers\SaveContactController;
 use Exception;
 
@@ -31,7 +31,7 @@ class SaveFileController extends Controller
         $file_name = $file->getClientOriginalName();
 
         if ($file->getSize() > 41463) {
-            StoreCsv::dispatch($file_name, \Auth::user()->id);
+            StoreLargeCsv::dispatch($file_name, \Auth::user()->id)->delay(now());
             return redirect('/')->with('success', 'Your file was received and will be processed soon');;
         }
 
