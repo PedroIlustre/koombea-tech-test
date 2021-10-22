@@ -2,13 +2,13 @@
 @section('page_title','Contato')
 @section('content')    
 
-    <div class="conteudo-pagina">
-        <div class="titulo-pagina">
+    <div class="content-page">
+        <div class="title-page">
             <h1>Log in to send a CSV file</h1>
         </div>
 
-        <div class="informacao-pagina">
-            <div class="contato-principal">
+        <div class="info-page">
+            <div class="margin-div">
                 @component('layouts._components.form_contato',['class_fieldset'=>'borda-preta'])
                 @endcomponent
             </div>

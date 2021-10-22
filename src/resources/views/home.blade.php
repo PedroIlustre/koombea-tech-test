@@ -6,14 +6,14 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Dashboard') }}</div>
-                <div class="informacao-pagina">
-                    <div class="contato-principal">
+                <div class="info-page">
+                    <div class="margin-div">
                         <a href="/list_contact/{{Auth::user()->id}}"> &nbsp; &nbsp; See all your contacts
                     </div>
                 </div>
 
-                <div class="informacao-pagina">
-                    <div class="contato-principal">
+                <div class="info-page">
+                    <div class="margin-div">
                         <a href="/list_files/{{Auth::user()->id}}"> &nbsp; &nbsp; See all your pending files to submit
                     </div>
                 </div>
@@ -31,8 +31,8 @@
                         </div>
                     @endif
 
-                    <div class="informacao-pagina">
-                        <div class="contato-principal">
+                    <div class="info-page">
+                        <div class="margin-div">
                             @component('layouts._components.upload_file',['class_fieldset'=>'borda-preta'])
                             @endcomponent
                         </div>

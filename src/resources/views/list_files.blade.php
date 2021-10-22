@@ -19,7 +19,7 @@
     </tbody>
 </table>
 
-<div class="contato-principal">
+<div class="margin-div">
     <a href="/"> &nbsp; &nbsp; Back to upload
 </div>
     

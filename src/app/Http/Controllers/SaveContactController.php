@@ -21,6 +21,12 @@ class SaveContactController extends Controller
         $this->contact = new Contact();
     }
 
+    /**
+     * save - Save a contact by a fields sent by the application
+     * @author Pedro Ilustre
+     * @param $request 
+     * @return redirect
+     */
     public function save (Request $request) 
     {
         $fields = array_merge($request->all());

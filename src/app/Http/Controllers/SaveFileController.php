@@ -21,6 +21,12 @@ class SaveFileController extends Controller
         $this->upload = new Upload;
     }
 
+    /**
+     * save - Save a File sent on the Request
+     * @author Pedro Ilustre
+     * @param $request 
+     * @return redirect
+     */
     public function save (Request $request) 
     {
         $file = $request->file('file_uploaded');
@@ -35,6 +41,7 @@ class SaveFileController extends Controller
             return redirect('/')->with('success', 'Your file was received and will be processed soon');;
         }
 
+        # Apply validations on file fields to proceed
         $validation = CsvHelper::validateFile($file, $file_name);
 
         if ($validation['error'] === true)

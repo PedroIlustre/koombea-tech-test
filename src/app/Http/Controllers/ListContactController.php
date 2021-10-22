@@ -16,6 +16,12 @@ class ListContactController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * list - List saved contacts
+     * @author Pedro Ilustre
+     * @param $user_id 
+     * @return view
+     */
     public function list ($user_id) 
     {   
         $contacts = Contact::where('user_id', '=', $user_id)->get();
