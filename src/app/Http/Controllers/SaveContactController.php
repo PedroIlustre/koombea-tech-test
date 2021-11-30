@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Models\ContactFiles;
+use App\Http\Models\Contact;
 use App\Http\Controllers\Auth;
 use App\Exceptions\FieldsException;
 use App\Helpers\CreditCardHelper;
@@ -12,15 +12,21 @@ use App\Helpers\ContactInfoHelper;
 class SaveContactController extends Controller
 {
 
-    private $contact_files;
-    private $file_id;
+    private $contact;
+    private $upload_id;
 
     public function __construct()
     {
         $this->middleware('auth');
-        $this->contact_files = new ContactFiles();
+        $this->contact = new Contact();
     }
 
+    /**
+     * save - Save a contact by a fields sent by the application
+     * @author Pedro Ilustre
+     * @param $request 
+     * @return redirect
+     */
     public function save (Request $request) 
     {
         $fields = array_merge($request->all());
@@ -36,7 +42,7 @@ class SaveContactController extends Controller
                             $error_table_columns[] = $table_column . ' is required';
                             continue;
                         }
-                        $this->contact_files->{$table_column} = $contact[$new_value_column];
+                        $this->contact->{$table_column} = $contact[$new_value_column];
 
                         if($table_column == 'credit_card') {
                             $credit_card = $contact[$new_value_column];
@@ -48,16 +54,26 @@ class SaveContactController extends Controller
                         throw new FieldsException ('', 0, null, $error_table_columns);
                     }
                     
-                    $validate_fields = ContactInfoHelper::validateFields($this->contact_files->getAttributes());
+                    $validate_fields = ContactInfoHelper::validateFields($this->contact->getAttributes());
                     
                     if ($validate_fields['status'] == 'error') {
-                        throw new FieldsException ('', 0, null, $validate_fields);
+                         throw new FieldsException ('', 0, null, $validate_fields);
                     }
                     
-                    $this->contact_files->franchise = CreditCardHelper::franchise($credit_card);
-                    $this->contact_files->user_id = \Auth::user()->id;
-                    $this->contact_files->upload_id = $this->upload_id;
-                    $this->contact_files->save();
+                    $this->contact->franchise = CreditCardHelper::franchise($credit_card);
+                    $this->contact->user_id = \Auth::user()->id;
+                    $this->contact->upload_id = $this->upload_id;
+                    $this->contact->save();
+                    
+                    try {
+
+                        $file = new SaveFileController();
+                        $file->processFile($this->upload_id);
+
+                    }  catch (Exception $e) {
+                        throw new FieldsException('', 0, null, $e->getMessage());
+                    }
+
                 }
             }
         } catch (FieldsException $e) {

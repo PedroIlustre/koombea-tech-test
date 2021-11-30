@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Models\ContactFiles;
+use App\Http\Models\Contact;
 use App\Http\Controllers\Auth;
 
 class ListContactController extends Controller
@@ -16,9 +16,15 @@ class ListContactController extends Controller
         $this->middleware('auth');
     }
 
-    public function list () 
+    /**
+     * list - List saved contacts
+     * @author Pedro Ilustre
+     * @param $user_id 
+     * @return view
+     */
+    public function list ($user_id) 
     {   
-        $contact_files = ContactFiles::all();
-        return view('list_contacts', ['contact_files'=> $contact_files->all()]);
+        $contacts = Contact::where('user_id', '=', $user_id)->get();
+        return view('list_contacts', ['contacts'=> $contacts]);
     }
 }

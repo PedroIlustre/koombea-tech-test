@@ -15,7 +15,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach($contact_files as $contact)
+        @foreach($contacts as $contact)
         <tr>
             <td> {{$contact->name}} </td>
             <td> {{$contact->birth_date}} </td>
@@ -29,7 +29,7 @@
     </tbody>
 </table>
 
-<div class="contato-principal">
+<div class="margin-div">
     <a href="/"> &nbsp; &nbsp; Back to upload
 </div>
     

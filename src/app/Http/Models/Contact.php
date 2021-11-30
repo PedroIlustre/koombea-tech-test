@@ -4,9 +4,9 @@ namespace App\Http\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ContactFiles extends Model
+class Contact extends Model
 {
-    public $table = "contact_files";
+    public $table = "contacts";
 
     protected $fillable = [
         'id', 
